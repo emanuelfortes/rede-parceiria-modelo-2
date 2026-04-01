@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rede Parceria</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,700;0,900;1,700;1,900&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+
+:root {
+  --verde:       #4C8C1A;
+  --verde-vivo:  #6BBF28;
+  --verde-escuro:#1E4A08;
+  --creme:       #F5F0E8;
+  --creme-escuro:#E8E0CC;
+  --terra:       #C8A96A;
+  --preto:       #0C0F0A;
+  --cinza:       #6B7060;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--creme);
+  color: var(--preto);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ── CURSOR ──────────────────────────── */
+#cur { position:fixed; width:10px; height:10px; background:var(--verde-vivo); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:width .2s,height .2s; mix-blend-mode:multiply; }
+#cur.big { width:60px; height:60px; }
+
+/* ── NAV ─────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 28px 52px;
+  transition: all .4s;
+}
+nav.stuck {
+  background: var(--creme);
+  padding: 16px 52px;
+  border-bottom: 1px solid rgba(0,0,0,.08);
+}
+.logo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900; font-size: 22px; letter-spacing: -.01em;
+  text-decoration: none; color: var(--preto);
+  display: flex; align-items: center; gap: 10px;
+}
+.logo-badge {
+  width: 32px; height: 32px; background: var(--verde); border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+}
+.logo-badge svg { width: 20px; height: 20px; }
+.logo em { font-style: normal; color: var(--verde); }
+.nav-right { display: flex; align-items: center; gap: 36px; }
+.nav-right a {
+  font-size: 12px; font-weight: 500; letter-spacing: .1em;
+  text-transform: uppercase; text-decoration: none; color: var(--cinza);
+  transition: color .25s;
+}
+.nav-right a:hover { color: var(--preto); }
+.nav-pill {
+  background: var(--preto) !important; color: var(--creme) !important;
+  padding: 10px 22px; border-radius: 40px;
+}
+.nav-pill:hover { background: var(--verde) !important; color: #fff !important; }
+
+/* ── HERO ────────────────────────────── */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding-top: 96px;
+  overflow: hidden;
+}
+
+/* left column — editorial */
+.hero-left {
+  padding: 60px 52px 80px;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  position: relative;
+  background: var(--creme);
+}
+
+.hero-vol {
+  position: absolute; top: 96px; left: 52px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px; font-weight: 700; letter-spacing: .22em;
+  text-transform: uppercase; color: var(--cinza);
+}
+
+.hero-number {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(160px, 20vw, 240px);
+  font-weight: 900; line-height: .85;
+  color: transparent;
+  -webkit-text-stroke: 2px var(--creme-escuro);
+  letter-spacing: -.04em;
+  user-select: none;
+  position: absolute; bottom: 60px; left: 30px;
+  z-index: 0;
+}
+
+.hero-headline {
+  position: relative; z-index: 1;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: clamp(64px, 8vw, 108px);
+  line-height: .92;
+  letter-spacing: -.025em;
+  text-transform: uppercase;
+  margin-bottom: 32px;
+}
+.hero-headline .italic {
+  font-style: italic; color: var(--verde);
+}
+.hero-headline .outline {
+  color: transparent;
+  -webkit-text-stroke: 2px var(--preto);
+}
+
+.hero-sub {
+  position: relative; z-index: 1;
+  display: flex; align-items: flex-end; gap: 32px;
+}
+.hero-sub p {
+  font-size: 15px; line-height: 1.7; color: var(--cinza);
+  max-width: 320px; font-weight: 300;
+}
+.hero-sub-arrow {
+  flex-shrink: 0;
+  width: 52px; height: 52px;
+  border: 1.5px solid var(--preto);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  text-decoration: none; color: var(--preto);
+  transition: background .3s, color .3s, transform .3s;
+}
+.hero-sub-arrow:hover { background: var(--preto); color: var(--creme); transform: rotate(45deg); }
+
+/* right column — bold green */
+.hero-right {
+  background: var(--verde);
+  position: relative; overflow: hidden;
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: 60px 52px 60px;
+}
+
+.hero-right-top {
+  display: flex; justify-content: space-between; align-items: flex-start;
+}
+.hero-tag {
+  background: rgba(255,255,255,.15);
+  color: #fff; font-size: 11px; font-weight: 500;
+  letter-spacing: .15em; text-transform: uppercase;
+  padding: 8px 16px; border-radius: 40px;
+  border: 1px solid rgba(255,255,255,.25);
+}
+.hero-year {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px; font-weight: 700; letter-spacing: .15em;
+  text-transform: uppercase; color: rgba(255,255,255,.5);
+}
+
+.hero-slogan {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(72px, 9vw, 120px);
+  font-weight: 900; font-style: italic;
+  line-height: .9; letter-spacing: -.03em;
+  text-transform: uppercase; color: #fff;
+  text-align: right;
+}
+.hero-slogan .ghost {
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(255,255,255,.35);
+  display: block;
+}
+
+.hero-right-bottom {
+  display: flex; justify-content: space-between; align-items: flex-end;
+}
+.hero-stat-block { color: #fff; }
+.hero-stat-block .num {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 52px; font-weight: 900; line-height: 1;
+  display: block;
+}
+.hero-stat-block .lbl {
+  font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+  color: rgba(255,255,255,.6); display: block; margin-top: 4px;
+}
+.hero-cta-btn {
+  display: flex; align-items: center; gap: 14px;
+  background: #fff; color: var(--verde);
+  text-decoration: none; padding: 16px 28px;
+  border-radius: 60px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 15px; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase;
+  transition: background .3s, color .3s, transform .3s;
+}
+.hero-cta-btn:hover { background: var(--preto); color: #fff; transform: translateY(-3px); }
+.hero-cta-btn svg { transition: transform .3s; }
+.hero-cta-btn:hover svg { transform: translateX(4px); }
+
+/* decorative large circle */
+.hero-circle {
+  position: absolute; right: -120px; top: 50%;
+  transform: translateY(-50%);
+  width: 500px; height: 500px;
+  border: 1.5px solid rgba(255,255,255,.12);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.hero-circle::before {
+  content: '';
+  position: absolute; inset: 60px;
+  border: 1.5px solid rgba(255,255,255,.08);
+  border-radius: 50%;
+}
+
+/* ── TICKER ──────────────────────────── */
+.ticker {
+  background: var(--preto);
+  padding: 16px 0; overflow: hidden;
+  border-top: none;
+}
+.ticker-track {
+  display: flex; gap: 0;
+  animation: tick 28s linear infinite;
+  white-space: nowrap;
+}
+.ticker-item {
+  display: inline-flex; align-items: center; gap: 24px;
+  padding: 0 40px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 15px; font-weight: 700; letter-spacing: .18em;
+  text-transform: uppercase; color: rgba(255,255,255,.6);
+}
+.ticker-item span { color: var(--verde-vivo); }
+@keyframes tick { to { transform: translateX(-50%); } }
+
+/* ── SECTION BASE ────────────────────── */
+.sec { padding: 120px 52px; }
+.sec-label {
+  font-size: 10px; font-weight: 700; letter-spacing: .22em;
+  text-transform: uppercase; color: var(--verde);
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 28px;
+}
+.sec-label::before {
+  content: ''; width: 28px; height: 1px; background: var(--verde);
+}
+.display-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900; text-transform: uppercase;
+  letter-spacing: -.025em; line-height: .92;
+}
+
+/* ── ABOUT — split ───────────────────── */
+.about-sec {
+  background: var(--creme);
+  display: grid; grid-template-columns: 380px 1fr;
+  gap: 0; padding: 0;
+}
+.about-left {
+  background: var(--verde-escuro);
+  padding: 80px 52px;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.about-left-label {
+  font-size: 10px; font-weight: 700; letter-spacing: .22em;
+  text-transform: uppercase; color: var(--verde-vivo);
+  display: flex; align-items: center; gap: 12px;
+}
+.about-left-label::before { content:''; width:20px; height:1px; background:var(--verde-vivo); }
+.about-left h2 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(56px, 6vw, 80px); font-weight: 900;
+  text-transform: uppercase; line-height: .9;
+  letter-spacing: -.025em; color: #fff;
+  margin-top: 40px;
+}
+.about-left h2 em { font-style: italic; color: var(--verde-vivo); display: block; }
+.about-metric {
+  border-top: 1px solid rgba(255,255,255,.1);
+  padding-top: 32px; margin-top: 40px;
+}
+.about-metric .big {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 80px; font-weight: 900; line-height: 1;
+  color: var(--verde-vivo);
+}
+.about-metric .small {
+  font-size: 12px; letter-spacing: .12em; text-transform: uppercase;
+  color: rgba(255,255,255,.45); margin-top: 6px;
+}
+
+.about-right {
+  padding: 80px 80px 80px 60px;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.about-body {
+  font-size: 17px; line-height: 1.75; color: var(--cinza);
+  font-weight: 300; max-width: 520px;
+}
+.about-body strong { color: var(--preto); font-weight: 500; }
+.about-pills {
+  display: flex; flex-wrap: wrap; gap: 10px; margin-top: 48px;
+}
+.pill {
+  background: transparent;
+  border: 1.5px solid var(--creme-escuro);
+  color: var(--cinza); font-size: 12px;
+  font-weight: 500; letter-spacing: .06em;
+  padding: 9px 18px; border-radius: 40px;
+  transition: border-color .3s, color .3s, background .3s;
+}
+.pill:hover { border-color: var(--verde); color: var(--verde); background: rgba(76,140,26,.05); }
+.about-quote {
+  margin-top: 56px;
+  border-left: 3px solid var(--verde);
+  padding-left: 24px;
+}
+.about-quote blockquote {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px; line-height: 1.5; color: var(--preto);
+  font-style: italic; margin-bottom: 12px;
+}
+.about-quote cite {
+  font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--cinza); font-style: normal;
+}
+
+/* ── BRAND IDENTITY ──────────────────── */
+.brand-sec {
+  background: var(--preto);
+  padding: 120px 52px;
+  position: relative; overflow: hidden;
+}
+.brand-bg-text {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 300px; font-weight: 900;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255,255,255,.03);
+  letter-spacing: -.06em; white-space: nowrap;
+  pointer-events: none; user-select: none; line-height: 1;
+}
+.brand-inner {
+  position: relative; z-index: 1;
+}
+.brand-header {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  margin-bottom: 80px;
+}
+.brand-header h2 {
+  font-size: clamp(52px, 6vw, 88px);
+  color: #fff; max-width: 640px;
+}
+.brand-header-right p {
+  font-size: 14px; line-height: 1.7; color: rgba(255,255,255,.4);
+  max-width: 300px; text-align: right;
+}
+
+.brand-cards {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 1px; background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.06); border-radius: 20px; overflow: hidden;
+}
+.brand-card {
+  background: rgba(255,255,255,.02);
+  padding: 48px 40px;
+  transition: background .4s;
+  position: relative; overflow: hidden;
+}
+.brand-card::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 2px; background: var(--verde);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .5s cubic-bezier(.16,1,.3,1);
+}
+.brand-card:hover { background: rgba(255,255,255,.04); }
+.brand-card:hover::after { transform: scaleX(1); }
+.bc-num {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 72px; font-weight: 900; line-height: 1;
+  color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,.1);
+  margin-bottom: 24px; display: block;
+}
+.bc-icon {
+  width: 48px; height: 48px; border-radius: 12px;
+  background: rgba(76,140,26,.15);
+  border: 1px solid rgba(107,191,40,.2);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 24px;
+}
+.bc-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 24px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .02em; color: #fff; margin-bottom: 12px;
+}
+.bc-body {
+  font-size: 13px; line-height: 1.75; color: rgba(255,255,255,.4); font-weight: 300;
+}
+
+/* ── LOGO SHOWCASE ───────────────────── */
+.logo-showcase {
+  background: var(--verde);
+  padding: 100px 52px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: center;
+}
+.logo-show-left h2 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(52px, 6vw, 80px); font-weight: 900;
+  text-transform: uppercase; letter-spacing: -.025em;
+  line-height: .92; color: #fff; margin-bottom: 32px;
+}
+.logo-show-left h2 em { font-style: italic; display: block; color: rgba(255,255,255,.55); }
+.logo-show-left p { font-size: 15px; line-height: 1.75; color: rgba(255,255,255,.65); font-weight: 300; max-width: 400px; }
+
+.logo-display-box {
+  background: rgba(0,0,0,.12);
+  border-radius: 24px; padding: 60px;
+  display: flex; flex-direction: column; gap: 40px;
+  align-items: center;
+  border: 1px solid rgba(255,255,255,.12);
+}
+.logo-row {
+  display: flex; align-items: center; gap: 24px;
+}
+.logo-svg-wrap {
+  display: flex; align-items: center; gap: 14px;
+}
+.logo-svg-wrap svg { filter: drop-shadow(0 4px 20px rgba(0,0,0,.3)); }
+
+/* The P-cart icon recreation */
+.cart-icon-lg {
+  width: 80px; height: 80px;
+}
+.cart-icon-sm {
+  width: 44px; height: 44px;
+}
+
+/* ── COLORS ──────────────────────────── */
+.colors-sec {
+  background: var(--creme);
+  padding: 120px 52px;
+}
+.colors-grid {
+  display: grid; grid-template-columns: 2fr 1fr;
+  gap: 20px; margin-top: 64px;
+}
+.color-big {
+  border-radius: 20px; overflow: hidden;
+  height: 380px; position: relative;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 40px;
+}
+.color-big::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.4) 0%, transparent 60%);
+  z-index: 1;
+}
+.color-big-info { position: relative; z-index: 2; color: #fff; }
+.color-big-info h3 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 32px; font-weight: 900; text-transform: uppercase;
+  letter-spacing: -.01em; margin-bottom: 6px;
+}
+.color-big-info p { font-size: 13px; color: rgba(255,255,255,.65); }
+.colors-stack {
+  display: flex; flex-direction: column; gap: 20px;
+}
+.color-sm {
+  border-radius: 16px; flex: 1;
+  padding: 28px; display: flex; flex-direction: column; justify-content: flex-end;
+}
+.color-sm h3 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 22px; font-weight: 900; text-transform: uppercase;
+  letter-spacing: -.01em; margin-bottom: 4px;
+}
+.color-sm p { font-size: 12px; opacity: .6; }
+
+/* ── COMPETITION ─────────────────────── */
+.comp-sec {
+  background: var(--preto);
+  padding: 120px 52px;
+}
+.comp-sec .sec-label::before { background: var(--verde-vivo); }
+.comp-sec .sec-label { color: var(--verde-vivo); }
+.comp-top {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  margin-bottom: 72px;
+}
+.comp-top h2 { color: #fff; font-size: clamp(52px, 6vw, 80px); max-width: 560px; }
+.comp-top p { font-size: 14px; color: rgba(255,255,255,.35); max-width: 280px; text-align: right; line-height: 1.7; }
+
+.comp-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.comp-table th {
+  text-align: left; padding: 14px 0;
+  font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
+  color: rgba(255,255,255,.3); font-weight: 500;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+}
+.comp-table td {
+  padding: 22px 0;
+  border-bottom: 1px solid rgba(255,255,255,.05);
+  vertical-align: middle;
+}
+.comp-table tr:hover td { background: rgba(255,255,255,.02); }
+.comp-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 20px; font-weight: 700; letter-spacing: .02em;
+  text-transform: uppercase; color: #fff;
+}
+.comp-name.highlight { color: var(--verde-vivo); }
+.comp-bar-wrap { width: 220px; }
+.comp-bar-bg { height: 4px; background: rgba(255,255,255,.08); border-radius: 2px; overflow: hidden; }
+.comp-bar-fill { height: 100%; border-radius: 2px; background: rgba(255,255,255,.2); transform: scaleX(0); transform-origin: left; transition: transform 1.4s cubic-bezier(.16,1,.3,1); }
+.comp-bar-fill.green { background: var(--verde-vivo); }
+.comp-bar-fill.on { transform: scaleX(1); }
+.comp-stores { font-size: 13px; color: rgba(255,255,255,.4); padding-left: 20px; }
+.comp-stores.big { color: var(--verde-vivo); font-weight: 600; }
+.comp-badge {
+  display: inline-block;
+  background: rgba(107,191,40,.15);
+  color: var(--verde-vivo);
+  font-size: 10px; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; padding: 5px 12px; border-radius: 20px;
+  border: 1px solid rgba(107,191,40,.3);
+}
+
+/* ── PRODUCTS ────────────────────────── */
+.prod-sec {
+  background: var(--creme-escuro);
+  padding: 120px 52px;
+}
+.prod-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 64px; }
+.prod-header h2 { font-size: clamp(52px, 5.5vw, 80px); max-width: 500px; }
+.prod-header p { font-size: 14px; line-height: 1.7; color: var(--cinza); max-width: 280px; text-align: right; }
+.prod-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.prod-card {
+  background: var(--creme); border-radius: 18px; overflow: hidden;
+  transition: transform .4s, box-shadow .4s;
+  position: relative;
+}
+.prod-card:hover { transform: translateY(-10px); box-shadow: 0 30px 60px rgba(0,0,0,.12); }
+.prod-top {
+  height: 200px; display: flex; align-items: center; justify-content: center;
+  font-size: 80px; position: relative;
+  background: linear-gradient(135deg, rgba(76,140,26,.08), rgba(107,191,40,.05));
+}
+.prod-tag {
+  position: absolute; top: 14px; left: 14px;
+  background: var(--verde); color: #fff;
+  font-size: 9px; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; padding: 5px 12px; border-radius: 20px;
+}
+.prod-body { padding: 22px 22px 28px; }
+.prod-body h3 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 22px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .02em; color: var(--preto); margin-bottom: 6px;
+}
+.prod-body p { font-size: 12px; color: var(--cinza); }
+
+/* ── COMMUNICATION SHOWCASE ──────────── */
+.comm-sec {
+  background: var(--preto);
+  padding: 120px 52px;
+}
+.comm-header { margin-bottom: 72px; }
+.comm-header h2 { color: #fff; font-size: clamp(52px, 6vw, 80px); }
+.comm-bento {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: 280px 280px;
+  gap: 12px;
+}
+.cb { border-radius: 16px; overflow: hidden; position: relative; transition: transform .4s; }
+.cb:hover { transform: scale(1.02); z-index: 2; }
+
+.cb1 { grid-column: span 3; background: var(--verde); }
+.cb2 { grid-column: span 2; background: #1a2e10; }
+.cb3 { grid-column: span 1; background: #0a1a06; }
+.cb4 { grid-column: span 2; background: var(--verde-escuro); }
+.cb5 { grid-column: span 2; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); }
+.cb6 { grid-column: span 2; background: #111; }
+
+.cb-inner {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  justify-content: space-between;
+  padding: 32px;
+}
+.cb-inner.center { align-items: center; justify-content: center; }
+.cb-tag {
+  font-size: 9px; font-weight: 700; letter-spacing: .2em;
+  text-transform: uppercase; color: rgba(255,255,255,.4);
+  background: rgba(255,255,255,.08); padding: 5px 12px;
+  border-radius: 20px; align-self: flex-start;
+}
+.cb-headline {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900; text-transform: uppercase;
+  line-height: .9; letter-spacing: -.02em; color: #fff;
+  font-size: clamp(32px, 4vw, 56px);
+}
+.cb-headline.sm { font-size: 28px; }
+.cb-headline em { font-style: italic; color: var(--verde-vivo); display: block; }
+
+.cb-logo-block {
+  display: flex; align-items: center; gap: 10px;
+}
+.cb-logo-mark {
+  width: 36px; height: 36px; background: rgba(255,255,255,.1);
+  border-radius: 8px; display: flex; align-items: center; justify-content: center;
+}
+.cb-logo-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 18px; font-weight: 700; letter-spacing: .04em;
+  text-transform: uppercase; color: #fff;
+}
+.cb-logo-name small {
+  display: block; font-size: 9px; font-weight: 400;
+  letter-spacing: .15em; color: rgba(255,255,255,.4);
+}
+
+.cb-stat {
+  text-align: center; color: #fff;
+}
+.cb-stat .n {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 72px; font-weight: 900; line-height: 1;
+  color: var(--verde-vivo);
+}
+.cb-stat .l {
+  font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+  color: rgba(255,255,255,.4); margin-top: 6px;
+}
+
+/* ── CTA ─────────────────────────────── */
+.cta-sec {
+  background: var(--creme);
+  padding: 160px 52px;
+  text-align: center; position: relative; overflow: hidden;
+}
+.cta-sec::before {
+  content: 'CE';
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 600px; font-weight: 900; line-height: 1;
+  color: transparent; -webkit-text-stroke: 2px rgba(76,140,26,.06);
+  pointer-events: none; letter-spacing: -.08em;
+}
+.cta-inner { position: relative; z-index: 1; }
+.cta-inner h2 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(64px, 9vw, 130px); font-weight: 900;
+  text-transform: uppercase; line-height: .88;
+  letter-spacing: -.04em; color: var(--preto);
+  margin-bottom: 40px;
+}
+.cta-inner h2 em { font-style: italic; color: var(--verde); display: block; }
+.cta-inner p { font-size: 16px; color: var(--cinza); max-width: 440px; margin: 0 auto 48px; line-height: 1.7; font-weight: 300; }
+.cta-btn-group { display: flex; gap: 14px; justify-content: center; align-items: center; }
+.btn-dark {
+  background: var(--preto); color: var(--creme);
+  text-decoration: none; padding: 18px 40px; border-radius: 60px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 16px; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase;
+  display: flex; align-items: center; gap: 10px;
+  transition: background .3s, transform .3s;
+}
+.btn-dark:hover { background: var(--verde); transform: translateY(-3px); }
+.btn-line {
+  background: transparent; color: var(--preto);
+  text-decoration: none; padding: 18px 36px; border-radius: 60px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 16px; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase; border: 1.5px solid var(--creme-escuro);
+  transition: border-color .3s, color .3s;
+}
+.btn-line:hover { border-color: var(--verde); color: var(--verde); }
+
+/* ── FOOTER ──────────────────────────── */
+footer {
+  background: var(--preto);
+  padding: 80px 52px 48px;
+}
+.footer-top {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 60px; padding-bottom: 60px;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+}
+.f-brand {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 36px; font-weight: 900; letter-spacing: -.02em;
+  text-transform: uppercase; color: #fff; margin-bottom: 16px;
+}
+.f-brand em { font-style: italic; color: var(--verde); }
+.f-desc { font-size: 13px; color: rgba(255,255,255,.3); line-height: 1.7; max-width: 280px; }
+.f-col h5 {
+  font-size: 10px; font-weight: 700; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--verde-vivo);
+  margin-bottom: 20px;
+}
+.f-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.f-col a { font-size: 13px; color: rgba(255,255,255,.35); text-decoration: none; transition: color .25s; }
+.f-col a:hover { color: #fff; }
+.footer-bottom {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 32px;
+}
+.footer-bottom p { font-size: 12px; color: rgba(255,255,255,.2); }
+.f-social { display: flex; gap: 12px; }
+.f-s {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.08);
+  display: flex; align-items: center; justify-content: center;
+  text-decoration: none; color: rgba(255,255,255,.4); font-size: 13px;
+  transition: background .3s, color .3s;
+}
+.f-s:hover { background: var(--verde); color: #fff; border-color: var(--verde); }
+
+/* ── SCROLL REVEAL ───────────────────── */
+.reveal { opacity: 0; transform: translateY(36px); transition: opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1); }
+.reveal.on { opacity: 1; transform: translateY(0); }
+.reveal-left { opacity: 0; transform: translateX(-36px); transition: opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1); }
+.reveal-left.on { opacity: 1; transform: translateX(0); }
+
+/* ── scrollbar ───────────────────────── */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--creme); }
+::-webkit-scrollbar-thumb { background: var(--verde); border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="logo">
+    <div class="logo-badge">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M3 5h18l-2 10H5L3 5Z" fill="white" rx="2"/>
+        <rect x="2" y="3" width="20" height="4" rx="2" fill="rgba(255,255,255,.7)"/>
+        <circle cx="8" cy="20" r="2" fill="white"/>
+        <circle cx="16" cy="20" r="2" fill="white"/>
+      </svg>
+    </div>
+    Rede <em>Par<span style="border-bottom:2px solid currentColor;">CE</span>ria</em>
+  </a>
+  <div class="nav-right">
+    <a href="#sobre">Sobre</a>
+    <a href="#identidade">Identidade</a>
+    <a href="#produtos">Produtos</a>
+    <a href="#lojas">Lojas</a>
+    <a href="#contato" class="nav-pill">Seja Associado</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <!-- left: editorial text -->
+  <div class="hero-left">
+    <span class="hero-vol">Rebranding 2024 · Ceará</span>
+    <div class="hero-number">70</div>
+    <h1 class="hero-headline">
+      A Rede<br>
+      <span class="italic">cearense</span><br>
+      <span class="outline">de verdade</span>
+    </h1>
+    <div class="hero-sub">
+      <p>22 associados, mais de 70 lojas e um único compromisso: estar com você todo dia em cada esquina do Ceará.</p>
+      <a href="#sobre" class="hero-sub-arrow">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9H15M10 4L15 9L10 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- right: bold green panel -->
+  <div class="hero-right">
+    <div class="hero-circle"></div>
+    <div class="hero-right-top">
+      <span class="hero-tag">Nova Identidade Visual</span>
+      <span class="hero-year">CE · 2024</span>
+    </div>
+    <div class="hero-slogan">
+      Com<br>
+      <span class="ghost">Você</span>
+      Todo<br>
+      Dia
+    </div>
+    <div class="hero-right-bottom">
+      <div style="display:flex;gap:48px;">
+        <div class="hero-stat-block">
+          <span class="num">22</span>
+          <span class="lbl">Associados</span>
+        </div>
+        <div class="hero-stat-block">
+          <span class="num">70+</span>
+          <span class="lbl">Lojas</span>
+        </div>
+      </div>
+      <a href="#contato" class="hero-cta-btn">
+        Seja Associado
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M9 4L13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="ticker-item"><span>★</span> Com Você Todo Dia</span>
+    <span class="ticker-item"><span>★</span> Preço Baixo Todo Dia</span>
+    <span class="ticker-item"><span>★</span> Qualidade Todo Dia</span>
+    <span class="ticker-item"><span>★</span> 70+ Lojas no Ceará</span>
+    <span class="ticker-item"><span>★</span> Marca Própria Parceria</span>
+    <span class="ticker-item"><span>★</span> 22 Associados</span>
+    <span class="ticker-item"><span>★</span> Orgulho Cearense</span>
+    <span class="ticker-item"><span>★</span> Com Você Todo Dia</span>
+    <span class="ticker-item"><span>★</span> Preço Baixo Todo Dia</span>
+    <span class="ticker-item"><span>★</span> Qualidade Todo Dia</span>
+    <span class="ticker-item"><span>★</span> 70+ Lojas no Ceará</span>
+    <span class="ticker-item"><span>★</span> Marca Própria Parceria</span>
+    <span class="ticker-item"><span>★</span> 22 Associados</span>
+    <span class="ticker-item"><span>★</span> Orgulho Cearense</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about-sec" id="sobre">
+  <div class="about-left">
+    <div>
+      <div class="about-left-label">Quem somos</div>
+      <h2>A Rede<br><em>Parceria</em></h2>
+    </div>
+    <div>
+      <div class="about-metric">
+        <div class="big">CE</div>
+        <div class="small">Origem cearense · Raiz nordestina</div>
+      </div>
+    </div>
+  </div>
+  <div class="about-right">
+    <div>
+      <p class="about-body reveal">
+        A Rede Parceria é uma rede de supermercados que <strong>conecta 22 associados e mais de 70 lojas</strong> por todo o Ceará. Mais do que um agrupamento de lojas, somos uma plataforma de inteligência de mercado que transforma supermercados independentes em competidores de alto nível.
+        <br><br>
+        Disputamos espaço com Uniforça, Rede Integrada, Super Lagoa, Cometa, Frangolândia e Centerbox — e vencemos com o que nenhum deles tem: <strong>o DNA genuinamente cearense.</strong>
+      </p>
+      <div class="about-pills reveal" style="transition-delay:.1s">
+        <span class="pill">Economia</span>
+        <span class="pill">Proximidade</span>
+        <span class="pill">Qualidade</span>
+        <span class="pill">Confiança</span>
+        <span class="pill">Ceará</span>
+        <span class="pill">Marca Própria</span>
+      </div>
+    </div>
+    <div class="about-quote reveal" style="transition-delay:.2s">
+      <blockquote>"Com você todo dia, de forma próxima, confiável e constante."</blockquote>
+      <cite>Slogan oficial da Rede Parceria · 2024</cite>
+    </div>
+  </div>
+</section>
+
+<!-- BRAND IDENTITY -->
+<section class="brand-sec" id="identidade">
+  <div class="brand-bg-text">PARCERIA</div>
+  <div class="brand-inner">
+    <div class="brand-header reveal">
+      <h2 class="display-title" style="color:#fff; font-size: clamp(52px,6vw,88px);">
+        Nova<br>Identidade<br><span style="color:var(--verde);">Visual</span>
+      </h2>
+      <div class="brand-header-right">
+        <p>Uma marca renovada que expressa evolução, orgulho cearense e conexão real com o segmento.</p>
+      </div>
+    </div>
+    <div class="brand-cards reveal" style="transition-delay:.1s">
+      <div class="brand-card">
+        <span class="bc-num">01</span>
+        <div class="bc-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 6h18l-2 11H5L3 6Z" fill="#6BBF28"/><rect x="2" y="4" width="20" height="4" rx="2" fill="#4C8C1A"/><circle cx="8" cy="21" r="2" fill="#6BBF28"/><circle cx="16" cy="21" r="2" fill="#6BBF28"/></svg>
+        </div>
+        <div class="bc-title">Ícone "P"</div>
+        <p class="bc-body">Carrinho de supermercado redesenhado com grid geométrico preciso em forma de "P", reforçando o setor e a identidade da marca. Precisão, harmonia e equilíbrio.</p>
+      </div>
+      <div class="brand-card">
+        <span class="bc-num">02</span>
+        <div class="bc-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><text x="2" y="18" font-family="serif" font-size="16" fill="#6BBF28" font-weight="bold">Aa</text></svg>
+        </div>
+        <div class="bc-title">Tipografia</div>
+        <p class="bc-body">Fonte personalizada criada para expressar aconchego, proximidade e confiança. Linhas curvas, formas arredondadas e fortes. O "CE" em destaque honra as raízes cearenses.</p>
+      </div>
+      <div class="brand-card">
+        <span class="bc-num">03</span>
+        <div class="bc-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#6BBF28" stroke-width="1.5"/><path d="M8 12h8M12 8v8" stroke="#6BBF28" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="bc-title">Cores</div>
+        <p class="bc-body">Verde reforça economia, proximidade e produtos sempre frescos. Branco transmite clareza e qualidade. Uma paleta simples, forte e inconfundível nas prateleiras do Ceará.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOGO SHOWCASE -->
+<section class="logo-showcase">
+  <div class="logo-show-left reveal">
+    <h2>
+      Antes e<br>
+      <em>depois</em>
+    </h2>
+    <p>Da identidade de 1996 para a marca moderna de 2024 — mesma essência, novo impacto. Um logo que funciona em qualquer superfície: sacola, caminhão, carrinho, tela.</p>
+  </div>
+  <div class="logo-display-box reveal" style="transition-delay:.15s">
+    <!-- Old logo concept -->
+    <div style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:0 16px;">
+      <div style="text-align:center;opacity:.5;">
+        <div style="font-family:'DM Serif Display',serif;font-size:28px;color:#fff;font-style:italic;line-height:1.1;margin-bottom:8px;">Rede<br>Parceria<br><span style="font-size:14px;opacity:.6;">supermercados</span></div>
+        <div style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.3);">Antes · 1996</div>
+      </div>
+      <div style="color:rgba(255,255,255,.2);font-size:28px;">→</div>
+      <!-- New logo concept -->
+      <div style="text-align:center;">
+        <svg width="80" height="80" viewBox="0 0 100 100" fill="none" style="display:block;margin:0 auto 12px;">
+          <rect x="15" y="14" width="70" height="16" rx="8" fill="white"/>
+          <path d="M15 28 L28 72 L72 72 L85 28Z" fill="white"/>
+          <rect x="34" y="38" width="32" height="18" rx="5" fill="rgba(255,255,255,.2)"/>
+          <circle cx="34" cy="88" r="8" fill="white"/>
+          <circle cx="66" cy="88" r="8" fill="white"/>
+        </svg>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;letter-spacing:.04em;text-transform:uppercase;color:#fff;line-height:1.1;margin-bottom:8px;">
+          <span style="font-size:14px;display:block;color:rgba(255,255,255,.5);letter-spacing:.15em;font-weight:400;margin-bottom:2px;">REDE</span>
+          PAR<span style="color:var(--verde-vivo);">CE</span>RIA
+        </div>
+        <div style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.4);">Novo · 2024</div>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,.08);width:100%;padding-top:24px;text-align:center;">
+      <div style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);">Slogan</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;font-style:italic;letter-spacing:-.01em;text-transform:uppercase;color:#fff;margin-top:8px;">
+        Com Você <span style="color:var(--verde-vivo);">Todo Dia</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COLORS -->
+<section class="colors-sec">
+  <div class="reveal">
+    <div class="sec-label">Cartela de Cores</div>
+    <h2 class="display-title" style="font-size:clamp(52px,6vw,80px);">Nossa<br>Paleta</h2>
+  </div>
+  <div class="colors-grid reveal" style="transition-delay:.1s">
+    <div class="color-big" style="background:linear-gradient(135deg,#3a7a10,#6BBF28);">
+      <div class="color-big-info">
+        <h3>Verde Parceria</h3>
+        <p>Economia, proximidade e produtos sempre frescos. A cor que o Ceará conhece.</p>
+      </div>
+    </div>
+    <div class="colors-stack">
+      <div class="color-sm" style="background:#1E4A08; color:#fff;">
+        <h3>Verde Escuro</h3>
+        <p style="color:rgba(255,255,255,.5)">Força · Solidez</p>
+      </div>
+      <div class="color-sm" style="background:var(--creme-escuro); border:1px solid var(--creme-escuro);">
+        <h3 style="color:var(--preto)">Creme</h3>
+        <p style="color:var(--cinza)">Clareza · Qualidade</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPETITION -->
+<section class="comp-sec" id="lojas">
+  <div class="sec-label reveal">Posicionamento de Mercado</div>
+  <div class="comp-top reveal" style="transition-delay:.05s">
+    <h2 class="display-title" style="color:#fff;">
+      Líderes<br>no Ceará
+    </h2>
+    <p>Presença em todo o estado com mais lojas do que qualquer rede independente concorrente.</p>
+  </div>
+  <table class="comp-table reveal" style="transition-delay:.1s">
+    <thead>
+      <tr>
+        <th style="width:200px">Rede</th>
+        <th style="width:260px">Penetração</th>
+        <th>Lojas</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="comp-name highlight">Rede Parceria</span></td>
+        <td><div class="comp-bar-wrap"><div class="comp-bar-bg"><div class="comp-bar-fill green" data-w=".82"></div></div></div></td>
+        <td><span class="comp-stores big">70+</span></td>
+        <td><span class="comp-badge">Líder</span></td>
+      </tr>
+      <tr>
+        <td><span class="comp-name">Uniforça</span></td>
+        <td><div class="comp-bar-wrap"><div class="comp-bar-bg"><div class="comp-bar-fill" data-w=".62"></div></div></div></td>
+        <td><span class="comp-stores">~50</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="comp-name">Rede Integrada</span></td>
+        <td><div class="comp-bar-wrap"><div class="comp-bar-bg"><div class="comp-bar-fill" data-w=".46"></div></div></div></td>
+        <td><span class="comp-stores">~38</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="comp-name">Super Lagoa</span></td>
+        <td><div class="comp-bar-wrap"><div class="comp-bar-bg"><div class="comp-bar-fill" data-w=".28"></div></div></div></td>
+        <td><span class="comp-stores">~22</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- PRODUCTS -->
+<section class="prod-sec" id="produtos">
+  <div class="prod-header reveal">
+    <div>
+      <div class="sec-label" style="color:var(--verde);">Marca Própria</div>
+      <h2 class="display-title" style="font-size:clamp(52px,5.5vw,80px);">
+        Produtos<br>Parceria
+      </h2>
+    </div>
+    <p style="font-size:14px;line-height:1.7;color:var(--cinza);max-width:280px;text-align:right;">
+      Nossa linha própria traz qualidade e economia para a mesa do cearense. Sempre com o selo que você confia.
+    </p>
+  </div>
+  <div class="prod-grid reveal" style="transition-delay:.1s">
+    <div class="prod-card">
+      <div class="prod-top">
+        🫘
+        <span class="prod-tag">Marca Própria</span>
+      </div>
+      <div class="prod-body">
+        <h3>Feijão Carioca</h3>
+        <p>1kg · Tipo 1 · Classe Cores</p>
+      </div>
+    </div>
+    <div class="prod-card">
+      <div class="prod-top" style="font-size:80px;">🌾</div>
+      <div class="prod-body">
+        <h3>Arroz Branco</h3>
+        <p>1kg · Longo Fino · Tipo 1</p>
+      </div>
+    </div>
+    <div class="prod-card">
+      <div class="prod-top" style="font-size:80px;">🍅</div>
+      <div class="prod-body">
+        <h3>Molho de Tomate</h3>
+        <p>150ml · Sabor e economia</p>
+      </div>
+    </div>
+    <div class="prod-card">
+      <div class="prod-top" style="font-size:80px;">🧄</div>
+      <div class="prod-body">
+        <h3>Polpa de Alho</h3>
+        <p>200g · Sempre fresco</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMMUNICATION BENTO -->
+<section class="comm-sec">
+  <div class="comm-header reveal">
+    <div class="sec-label" style="color:var(--verde-vivo);">Comunicação</div>
+    <h2 class="display-title" style="color:#fff;font-size:clamp(52px,6vw,80px);">
+      Presença em<br>todo lugar
+    </h2>
+  </div>
+  <div class="comm-bento reveal" style="transition-delay:.1s">
+    <!-- 1 -->
+    <div class="cb cb1">
+      <div class="cb-inner">
+        <span class="cb-tag">Campanha</span>
+        <div>
+          <div class="cb-headline">Com Você<br><em>Todo Dia</em></div>
+        </div>
+        <div class="cb-logo-block">
+          <div class="cb-logo-mark">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 5h18l-2 10H5Z" fill="white"/><circle cx="8" cy="20" r="2" fill="white"/><circle cx="16" cy="20" r="2" fill="white"/></svg>
+          </div>
+          <div class="cb-logo-name">
+            Rede Parceria
+            <small>Com Você Todo Dia</small>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 2 -->
+    <div class="cb cb2">
+      <div class="cb-inner">
+        <span class="cb-tag">Encarte</span>
+        <div class="cb-headline sm">Preço<br>Baixo<br>Todo Dia</div>
+      </div>
+    </div>
+    <!-- 3 -->
+    <div class="cb cb3">
+      <div class="cb-inner center">
+        <div class="cb-stat">
+          <div class="n">22</div>
+          <div class="l">Associados</div>
+        </div>
+      </div>
+    </div>
+    <!-- 4 -->
+    <div class="cb cb4">
+      <div class="cb-inner">
+        <span class="cb-tag">Fachada de Loja</span>
+        <div class="cb-headline sm">
+          Sua loja<br><em>nossa marca</em>
+        </div>
+      </div>
+    </div>
+    <!-- 5 -->
+    <div class="cb cb5">
+      <div class="cb-inner">
+        <span class="cb-tag">Uniformes</span>
+        <div style="text-align:center;font-size:72px;margin:auto;">👕</div>
+      </div>
+    </div>
+    <!-- 6 -->
+    <div class="cb cb6">
+      <div class="cb-inner">
+        <span class="cb-tag">Embalagem</span>
+        <div class="cb-headline sm">
+          Qualidade<br><em>todo dia</em>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-sec" id="contato">
+  <div class="cta-inner">
+    <h2>
+      Faça parte<br>
+      <em>da Rede</em>
+    </h2>
+    <p>Junte-se à maior rede de supermercados independentes do Ceará. Poder de compra, inteligência de mercado e uma marca que o povo reconhece.</p>
+    <div class="cta-btn-group">
+      <a href="#" class="btn-dark">
+        Quero ser associado
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M9 4L13 8L9 12" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#" class="btn-line">Saiba mais</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="f-brand">Rede <em>Parceria</em></div>
+      <p class="f-desc">Inteligência para envolver sua marca e desenvolver seu mercado. Com você todo dia, em cada esquina do Ceará.</p>
+    </div>
+    <div class="f-col">
+      <h5>Institucional</h5>
+      <ul>
+        <li><a href="#">Sobre a Rede</a></li>
+        <li><a href="#">Identidade Visual</a></li>
+        <li><a href="#">Seja Associado</a></li>
+        <li><a href="#">Marca Própria</a></li>
+      </ul>
+    </div>
+    <div class="f-col">
+      <h5>Lojas</h5>
+      <ul>
+        <li><a href="#">Encontre uma Loja</a></li>
+        <li><a href="#">Associados</a></li>
+        <li><a href="#">Expansão</a></li>
+      </ul>
+    </div>
+    <div class="f-col">
+      <h5>Contato</h5>
+      <ul>
+        <li><a href="#">@redeparceriaoficial</a></li>
+        <li><a href="#">(85) 99858-0612</a></li>
+        <li><a href="#">Fortaleza, Ceará</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2024 Rede Parceria Supermercados · Todos os direitos reservados · Fortaleza, CE</p>
+    <div class="f-social">
+      <a href="#" class="f-s">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+      </a>
+      <a href="#" class="f-s">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// cursor
+const cur = document.getElementById('cur');
+let mx=0,my=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX; my=e.clientY;
+  cur.style.left=mx+'px'; cur.style.top=my+'px';
+});
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>cur.classList.add('big'));
+  el.addEventListener('mouseleave',()=>cur.classList.remove('big'));
+});
+
+// nav stuck
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('stuck',scrollY>80));
+
+// scroll reveal
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('on');
+      // animate bars inside
+      e.target.querySelectorAll('.comp-bar-fill').forEach(b=>{
+        setTimeout(()=>{ b.style.transform=`scaleX(${b.dataset.w})`; b.classList.add('on'); },300);
+      });
+    }
+  });
+},{threshold:0.12});
+
+document.querySelectorAll('.reveal,.reveal-left').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
